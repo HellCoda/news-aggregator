@@ -28,7 +28,7 @@
 
 1. **Cloner le projet**
    ```bash
-   git clone https://github.com/[votre-username]/news-aggregator.git
+   git clone https://github.com/[HellCoda]/news-aggregator.git
    cd news-aggregator
    ```
 
