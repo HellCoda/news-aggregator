@@ -26,6 +26,10 @@
 
 ### Installation
 
+PANOPTIQUE v1.0.0 - Première Release
+
+https://github.com/HellCoda/news-aggregator/releases/tag/v1.0.0
+
 1. **Cloner le projet**
    ```bash
    git clone https://github.com/[HellCoda]/news-aggregator.git
