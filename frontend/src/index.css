@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fonts locales - Les Google Fonts ne fonctionnent pas dans Electron en production */
+/* Utilisation des polices système par défaut */
+
+/* Styles de base */
+@layer base {
+  * {
+    @apply border-border-primary;
+  }
+  
+  body {
+    @apply bg-background-primary text-text-primary;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Selection colors */
+  ::selection {
+    background-color: rgba(var(--accent-primary-rgb), 0.3);
+    @apply text-text-primary;
+  }
+  
+  /* Focus visible styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent-primary ring-offset-2 ring-offset-background-primary;
+  }
+}
+
+/* Custom scrollbar */
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-primary) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-border-primary rounded-full;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-border-secondary;
+  }
+  
+  /* Dark mode scrollbar */
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-border-secondary;
+  }
+  
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent-primary opacity-50;
+  }
+}
+
+/* Loading animation */
+@layer components {
+  .loading-dots {
+    @apply inline-flex items-center gap-1;
+  }
+
+  .loading-dots span {
+    @apply w-2 h-2 bg-accent-primary rounded-full animate-bounce;
+  }
+
+  .loading-dots span:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .loading-dots span:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  
+  /* Skeleton loader */
+  .skeleton {
+    @apply animate-pulse bg-gradient-to-r from-background-secondary to-background-hover;
+    background-size: 200% 100%;
+    animation: skeleton 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes skeleton {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  /* Glass effect utilities */
+  .glass {
+    @apply backdrop-blur-md bg-white/80 dark:bg-black/60;
+    @apply border border-white/20 dark:border-white/10;
+  }
+  
+  .glass-hover {
+    @apply hover:bg-white/90 dark:hover:bg-black/70;
+  }
+  
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-accent-primary to-accent-secondary;
+  }
+  
+  /* Card animations */
+  .card-lift {
+    @apply transition-all duration-300 ease-out;
+    @apply hover:-translate-y-1 hover:shadow-card-hover;
+  }
+  
+  /* Category colors */
+  .category-actualites {
+    @apply bg-category-actualites text-white;
+  }
+  
+  .category-technologie {
+    @apply bg-category-technologie text-white;
+  }
+  
+  .category-sport {
+    @apply bg-category-sport text-white;
+  }
+  
+  .category-culture {
+    @apply bg-category-culture text-white;
+  }
+  
+  .category-science {
+    @apply bg-category-science text-white;
+  }
+  
+  /* Animations */
+  .animate-in {
+    animation: animateIn 0.3s ease-out;
+  }
+  
+  @keyframes animateIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Page transitions */
+  .page-transition {
+    @apply animate-fade-in;
+  }
+}

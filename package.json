@@ -1,0 +1,19 @@
+{
+  "name": "news-aggregator",
+  "version": "1.0.0",
+  "description": "Application de bureau Windows pour centraliser toutes vos sources d'actualités",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "clean": "npm run clean:backend && npm run clean:frontend",
+    "clean:backend": "cd backend && rmdir /s /q node_modules 2>nul && del /f /q package-lock.json 2>nul",
+    "clean:frontend": "cd frontend && rmdir /s /q node_modules 2>nul && del /f /q package-lock.json 2>nul"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "author": "Camille",
+  "license": "MIT"
+}
