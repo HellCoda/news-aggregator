@@ -38,6 +38,9 @@ CREATE TABLE IF NOT EXISTS articles (
     title VARCHAR(500) NOT NULL,
     content TEXT,
     summary TEXT,
+    description TEXT,
+    excerpt TEXT,
+    image_url VARCHAR(500),
     url VARCHAR(500) NOT NULL UNIQUE,
     author VARCHAR(200),
     published_date DATETIME,
@@ -50,6 +53,27 @@ CREATE TABLE IF NOT EXISTS articles (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (source_id) REFERENCES sources(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS saved_articles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    original_article_id INTEGER,
+    title VARCHAR(500) NOT NULL,
+    content TEXT,
+    summary TEXT,
+    url VARCHAR(500) NOT NULL,
+    author VARCHAR(200),
+    published_date DATETIME,
+    source_name VARCHAR(200),
+    source_url VARCHAR(500),
+    category_name VARCHAR(100),
+    category_id INTEGER,
+    saved_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    notes TEXT,
+    tags TEXT, -- JSON array of tags
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (original_article_id) REFERENCES articles(id) ON DELETE SET NULL
 );
 
 -- User preferences table
@@ -79,6 +103,8 @@ CREATE TABLE IF NOT EXISTS sync_logs (
 CREATE INDEX IF NOT EXISTS idx_articles_source_published ON articles(source_id, published_date DESC);
 CREATE INDEX IF NOT EXISTS idx_articles_read_created ON articles(is_read, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_articles_favorite ON articles(is_favorite, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_saved_articles_original ON saved_articles(original_article_id);
+CREATE INDEX IF NOT EXISTS idx_saved_articles_saved_at ON saved_articles(saved_at DESC);
 CREATE INDEX IF NOT EXISTS idx_sources_active ON sources(is_active);
 CREATE INDEX IF NOT EXISTS idx_sync_logs_source_started ON sync_logs(source_id, started_at DESC);
 
@@ -99,6 +125,12 @@ CREATE TRIGGER IF NOT EXISTS update_articles_timestamp
     AFTER UPDATE ON articles
     BEGIN
         UPDATE articles SET updated_at = CURRENT_TIMESTAMP WHERE id = NEW.id;
+    END;
+
+CREATE TRIGGER IF NOT EXISTS update_saved_articles_timestamp 
+    AFTER UPDATE ON saved_articles
+    BEGIN
+        UPDATE saved_articles SET updated_at = CURRENT_TIMESTAMP WHERE id = NEW.id;
     END;
 
 CREATE TRIGGER IF NOT EXISTS update_preferences_timestamp 
