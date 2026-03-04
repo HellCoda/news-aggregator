@@ -28,7 +28,7 @@
 
 PANOPTIQUE v1.0.0 - Première Release
 
-https://github.com/HellCoda/news-aggregator/releases/tag/v1.0.0
+https://github.com/HellCoda/news-aggregator/releases/tag/v1.0.1
 
 1. **Cloner le projet**
    ```bash
